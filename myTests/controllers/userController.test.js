@@ -21,7 +21,7 @@ describe('User service', () => {
       req.body = { displayName, email, password, image };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub();
-      sinon.stub(userService, 'create').resolves(userMock.inserted);
+      sinon.stub(userService, 'create').resolves(userMock.response);
     });
 
     after(() => userService.create.restore());
