@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const routes = require('./routes');
 
 const app = express();
@@ -13,5 +14,7 @@ app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use(bodyParser.json());
 
 app.use(routes);
