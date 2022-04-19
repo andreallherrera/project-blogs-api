@@ -7,4 +7,9 @@ const create = async (user) => {
   return { status: 201, content: { token } };
 };
 
-module.exports = { create };
+const readByEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  return { status: 200, content: user };
+};
+
+module.exports = { create, readByEmail };
