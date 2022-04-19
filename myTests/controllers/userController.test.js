@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable no-unused-expressions */
 const sinon = require('sinon');
 const chai = require('chai');
@@ -11,25 +12,28 @@ const User = require('../../controllers/userController');
 const userService = require('../../services/userService');
 const userMock = require('../mocks/userMocks');
 
-describe('User service', () => {
+describe('User controller', () => {
   describe('#create', () => {
     const req = {};
     const res = {};
 
     before(() => {
-      const { displayName, email, password, image } = userMock.inserted;
-      req.body = { displayName, email, password, image };
+      req.body = userMock.params;
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub();
-      sinon.stub(userService, 'create').resolves(userMock.response);
+      sinon.stub(userService, 'create').resolves(userMock.create);
     });
 
     after(() => userService.create.restore());
 
-    it('It must call "res.status" with value 201 and "res.json" with a token', async () => {
+    it('It must call "res.status" with value 201', async () => {
       await User.create(req, res);
       expect(res.status.calledWith(201)).to.be.true;
-      expect(res.json.token).to.not.be.null;
+    });
+
+    it('It must call "res.json" with a token', async () => {
+      await User.create(req, res);
+      expect(res.json.token).not.to.be.null;
     });
   });
 });
