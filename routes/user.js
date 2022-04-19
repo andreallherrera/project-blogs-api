@@ -1,8 +1,9 @@
 const express = require('express');
 const userController = require('../controllers/userController');
+const userMiddleware = require('../middlewares/userMiddleware');
 
 const app = express();
 
-app.post('/', userController.create);
+app.post('/', userMiddleware.validateParams, userController.create);
 
 module.exports = app;
