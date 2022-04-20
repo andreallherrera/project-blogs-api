@@ -20,9 +20,9 @@ describe.only('Token middlewares', () => {
         req.headers = { }; 
       });
   
-      it('must return status 404', async () => {
+      it('must return status 401', async () => {
         await tokenMiddleware.verifyToken(req, res, next);
-        expect(res.status.calledWith(404)).to.be.true;
+        expect(res.status.calledWith(401)).to.be.true;
       });
 
       it('must return an error message', async () => {
@@ -42,9 +42,9 @@ describe.only('Token middlewares', () => {
         req.headers = { authorization: 'notValidToken' };
       });
   
-      it('must return status 404', async () => {
+      it('must return status 401', async () => {
         await tokenMiddleware.verifyToken(req, res, next);
-        expect(res.status.calledWith(404)).to.be.true;
+        expect(res.status.calledWith(401)).to.be.true;
       });
 
       it('must return an error message', async () => {
@@ -61,7 +61,7 @@ describe.only('Token middlewares', () => {
       before(() => {
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub();
-        req.headers = { authorization: `yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+        req.headers = { authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
         eyJlbWFpbCI6ImJyZXR0QGVtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNjUwNDgxNTM3LCJ
         leHAiOjE2NTEwODYzMzd9.zRk4MygGFjGfAfysxEpevJ3itFWqcl3VdcrNZCqR9j0` };
       });
