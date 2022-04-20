@@ -9,7 +9,7 @@ const userMiddleware = require('../../middlewares/userMiddleware');
 
 require('chai').use(require('sinon-chai'));
 
-describe.only('userMiddlewares', () => {
+describe('userMiddlewares', () => {
   describe('#validateParams', () => {
     describe('Field "displayName"', () => {
       const res = {};
