@@ -6,6 +6,6 @@ const tokenMiddleware = require('../middlewares/tokenMiddleware');
 const app = express();
 
 app.post('/', userMiddleware.validateParams, userController.create);
-app.get('/', tokenMiddleware.verifyToken);
+app.get('/', tokenMiddleware.verifyToken, userController.read);
 
 module.exports = app;

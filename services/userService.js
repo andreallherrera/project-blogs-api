@@ -12,4 +12,9 @@ const readByEmail = async (email) => {
   return { status: 200, content: user };
 };
 
-module.exports = { create, readByEmail };
+const read = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  return { status: 200, content: users };
+};
+
+module.exports = { create, readByEmail, read };
