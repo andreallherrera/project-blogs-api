@@ -12,6 +12,7 @@ const messages = {
   TOKEN_NOT_FOUND: 'Token not found',
   INVALID_TOKEN: 'Expired or invalid token',
   USER_NOT_EXISTS: 'User does not exist',
+  REQUIRED: (name) => `"${name}" is required`,
 };
 
 module.exports = { status, messages };
