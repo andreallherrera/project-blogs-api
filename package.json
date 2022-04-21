@@ -22,6 +22,7 @@
     "test-coverage": "jest --runInBand --coverage",
     "debug": "nodemon index.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json .",
+    "premyTest": "npm run drop && npm run prestart && npm run seed",
     "myTest": "mocha ./myTests/**/*$NAME*.test.js --exit"
   },
   "devDependencies": {

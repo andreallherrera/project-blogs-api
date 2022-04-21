@@ -2,58 +2,72 @@
 const sinon = require('sinon');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { before, after } = require('mocha');
+const { before } = require('mocha');
 const { expect } = require('chai');
 
 chai.use(chaiHttp);
 
 const User = require('../../services/userService');
+const userModel = require('../../models');
 const userMock = require('../mocks/userMocks');
 
-describe('User service', () => {
-  describe('#create', () => {
-    before(async () => {
-      sinon.stub(User, 'create').resolves(userMock.create);
+describe.only('User service', () => {
+  describe('#create', async () => {
+    sinon.stub(userModel.create).resolves(userMock.inserted);
+    const user = await User.create(userMock.params);
+
+    it('It must return status 201', () => {
+      expect(user.status).to.eq(201);
     });
 
-    after(() => User.create.restore());
-
-    it('It must return a token as a content with status 201', async () => {
-      const user = await User.create(userMock.params);
-      expect(user.status).to.eq(201);
+    it('It must return a token as a content', () => {
       expect(user.content).to.have.any.keys('token');
     });
   });
 
   describe('#readByEmail', () => {
     describe('When an user is found', () => {
-      before(async () => {
-        sinon.stub(User, 'readByEmail').resolves(userMock.readOk);
-      });
+      sinon.stub(userModel.findOne).resolves(userMock.readOneWithPassword);
   
-      after(() => User.readByEmail.restore());
-  
-      it('It must return the user with status 200', async () => {
-        const { email } = userMock.inserted;
+      it('It must return status 200', async () => {
+        const { email } = userMock.readOne;
         const user = await User.readByEmail(email);
         expect(user.status).to.eq(200);
+      });
+
+      it('It must return the user as a content', async () => {
+        const { email } = userMock.readOne;
+        const user = await User.readByEmail(email);
         expect(user.content).to.have.any.keys('dataValues');
+        expect(user.content.dataValues).to.deep.eq(userMock.readOneWithPassword);
       });
     });
 
     describe('When an user is not found', () => {
       before(async () => {
-        sinon.stub(User, 'readByEmail').resolves(userMock.readNotOk);
+        sinon.stub(userModel.findOne).resolves(null);
       });
-  
-      after(() => User.readByEmail.restore());
-  
-      it('It must return the user', async () => {
-        const { email } = userMock.inserted;
-        const user = await User.readByEmail(email);
+
+      it('It must return the content as null', async () => {
+        const user = await User.readByEmail('otheremail@gmail.com');
         expect(user.status).to.eq(200);
-        // eslint-disable-next-line no-unused-expressions
-        expect(user.content).to.be.null;
+        expect(user.content).to.be.eq(null);
+      });
+    });
+  });
+
+  describe('#read', () => {
+    describe('When the users are found', () => {
+      sinon.stub(userModel.findAll).resolves(userMock.readAll);
+    
+      it('It must return status 200', async () => {
+        const user = await User.read();
+        expect(user.status).to.eq(200);
+      });
+
+      it('It must return all users', async () => {
+        const user = await User.read();
+        expect(user.content).to.be.deep.eq(userMock.readAll);
       });
     });
   });

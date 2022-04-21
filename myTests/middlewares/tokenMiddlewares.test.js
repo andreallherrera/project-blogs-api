@@ -7,7 +7,7 @@ const { expect } = require('chai');
 const tokenMiddleware = require('../../middlewares/tokenMiddleware');
 const { messages } = require('../../utils/errors');
 
-describe.only('Token middlewares', () => {
+describe('Token middlewares', () => {
   describe('#verifyToken', () => {
     describe('when token is not sent in hearders', () => {
       const res = {};
