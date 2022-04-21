@@ -11,6 +11,7 @@ const messages = {
   INVALID_FIELDS: 'Invalid fields',
   TOKEN_NOT_FOUND: 'Token not found',
   INVALID_TOKEN: 'Expired or invalid token',
+  USER_NOT_EXISTS: 'User does not exist',
 };
 
 module.exports = { status, messages };

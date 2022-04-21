@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { status, messages } = require('../utils/errors');
 const jwt = require('../utils/jwt');
 
 const create = async (user) => {
@@ -13,8 +14,16 @@ const readByEmail = async (email) => {
 };
 
 const read = async () => {
-  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  const users = await User.findAll({ attributes: { exclude: ['password'] }, raw: true });
   return { status: 200, content: users };
 };
 
-module.exports = { create, readByEmail, read };
+const readById = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  if (user === null) {
+    return { status: status.notFound, content: { message: messages.USER_NOT_EXISTS } };
+  }
+  return { status: 200, content: user };
+};
+
+module.exports = { create, readByEmail, read, readById };
