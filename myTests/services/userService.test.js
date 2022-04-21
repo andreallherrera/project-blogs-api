@@ -11,7 +11,7 @@ const User = require('../../services/userService');
 const userModel = require('../../models');
 const userMock = require('../mocks/userMocks');
 
-describe.only('User service', () => {
+describe('User service', () => {
   describe('#create', async () => {
     sinon.stub(userModel.create).resolves(userMock.inserted);
     const user = await User.create(userMock.params);
