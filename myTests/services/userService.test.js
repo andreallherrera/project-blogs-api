@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 const User = require('../../services/userService');
 const userModel = require('../../models');
 const userMock = require('../mocks/userMocks');
+const { messages } = require('../../utils/errors');
 
 describe('User service', () => {
   describe('#create', async () => {
@@ -68,6 +69,40 @@ describe('User service', () => {
       it('It must return all users', async () => {
         const user = await User.read();
         expect(user.content).to.be.deep.eq(userMock.readAll);
+      });
+    });
+  });
+
+  describe('#readById', () => {
+    describe('When an user is found', () => {
+      sinon.stub(userModel.findOne).resolves(userMock.readOne);
+  
+      it('It must return status 200', async () => {
+        const { id } = userMock.readOne;
+        const user = await User.readById(id);
+        expect(user.status).to.eq(200);
+      });
+
+      it('It must return the user as a content', async () => {
+        const { id } = userMock.readOne;
+        const user = await User.readById(id);
+        expect(user.content).to.have.any.keys('dataValues');
+        expect(user.content.dataValues).to.deep.eq(userMock.readOne);
+      });
+    });
+
+    describe('When an user is not found', () => {
+      sinon.stub(userModel.findOne).resolves(null);
+
+      it('It must return status 404', async () => {
+        console.log('hola');
+        const user = await User.readById(0);
+        expect(user.status).to.eq(404);
+      });
+
+      it('It must an error message as content', async () => {
+        const user = await User.readById(0);
+        expect(user.content).to.be.deep.eq({ message: messages.USER_NOT_EXISTS });
       });
     });
   });
