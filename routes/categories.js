@@ -5,5 +5,6 @@ const categoryController = require('../controllers/categoryController');
 const app = express();
 
 app.post('/', tokenMiddleware.verifyToken, categoryController.create);
+app.get('/', tokenMiddleware.verifyToken);
 
 module.exports = app;
