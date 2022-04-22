@@ -13,6 +13,7 @@ const messages = {
   INVALID_TOKEN: 'Expired or invalid token',
   USER_NOT_EXISTS: 'User does not exist',
   CATEGORY_NOT_FOUND: '"categoryIds" not found',
+  POST_NOT_FOUND: 'Post does not exist',
   REQUIRED: (name) => `"${name}" is required`,
 };
 

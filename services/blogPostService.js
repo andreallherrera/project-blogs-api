@@ -1,5 +1,5 @@
 const { BlogPost, User, Category } = require('../models');
-const { status } = require('../utils/errors');
+const { status, messages } = require('../utils/errors');
 
 const create = async (params) => {
   const blogPost = await BlogPost.create(params);
@@ -15,4 +15,14 @@ const read = async () => {
   return { status: status.ok, content: blogPosts };
 };
 
-module.exports = { create, read };
+const readOne = async (id) => {
+  const blogPost = await BlogPost.findByPk(id, {
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  if (!blogPost) return { status: status.notFound, content: { message: messages.POST_NOT_FOUND } };
+  return { status: status.ok, content: blogPost.dataValues };
+};
+
+module.exports = { create, read, readOne };
