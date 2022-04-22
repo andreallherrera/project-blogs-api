@@ -9,4 +9,9 @@ const create = async (req, res) => {
   res.status(response.status).json(response.content);
 };
 
-module.exports = { create };
+const read = async (_req, res) => {
+  const response = await blogPostService.read();
+  res.status(response.status).json(response.content);
+};
+
+module.exports = { create, read };

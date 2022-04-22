@@ -7,5 +7,6 @@ const app = express();
 
 app.post('/', tokenMiddleware.verifyToken, 
   blogPostMiddleware.validateParams, blogPostController.create);
+app.get('/', tokenMiddleware.verifyToken, blogPostController.read);
 
 module.exports = app;
