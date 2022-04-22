@@ -8,5 +8,6 @@ const app = express();
 app.post('/', tokenMiddleware.verifyToken, 
   blogPostMiddleware.validateParams, blogPostController.create);
 app.get('/', tokenMiddleware.verifyToken, blogPostController.read);
+app.get('/:id', tokenMiddleware.verifyToken, blogPostController.readOne);
 
 module.exports = app;

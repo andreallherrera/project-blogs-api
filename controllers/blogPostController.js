@@ -14,4 +14,10 @@ const read = async (_req, res) => {
   res.status(response.status).json(response.content);
 };
 
-module.exports = { create, read };
+const readOne = async (req, res) => {
+  const { id } = req.params;
+  const response = await blogPostService.readOne(id);
+  res.status(response.status).json(response.content);
+};
+
+module.exports = { create, read, readOne };
