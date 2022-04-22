@@ -8,7 +8,7 @@ const BlogPost = require('../../controllers/blogPostController');
 const blogPostService = require('../../services/blogPostService');
 const blogPostMock = require('../mocks/blogPostMocks');
 
-describe('BlogPost controller', () => {
+describe.only('BlogPost controller', () => {
   describe('#create', () => {
     const req = { 
       body: blogPostMock.params,
@@ -56,6 +56,30 @@ describe('BlogPost controller', () => {
     it('It must call "res.json" with the inserted blogPost', async () => {
       await BlogPost.read(req, res);
       expect(res.json).not.to.deep.eq(blogPostMock.list);
+    });
+  });
+
+  describe('#readOne', () => {
+    const req = { params: 1, headers: { authorization: blogPostMock.token } };
+    const res = {};
+
+    before(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+      sinon.stub(blogPostService, 'readOne')
+        .resolves({ status: 200, content: blogPostMock.list[0] });
+    });
+
+    after(() => blogPostService.readOne.restore());
+
+    it('It must call "res.status" with value 200', async () => {
+      await BlogPost.readOne(req, res);
+      expect(res.status.calledWith(200)).to.be.true;
+    });
+
+    it('It must call "res.json" with the inserted blogPost', async () => {
+      await BlogPost.readOne(req, res);
+      expect(res.json).not.to.deep.eq(blogPostMock.list[0]);
     });
   });
 });
