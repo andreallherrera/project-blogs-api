@@ -20,4 +20,11 @@ const readOne = async (req, res) => {
   res.status(response.status).json(response.content);
 };
 
-module.exports = { create, read, readOne };
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const response = await blogPostService.update(id, { title, content });
+  res.status(response.status).json(response.content);
+};
+
+module.exports = { create, read, readOne, update };
