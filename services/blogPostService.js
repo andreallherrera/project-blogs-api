@@ -25,4 +25,10 @@ const readOne = async (id) => {
   return { status: status.ok, content: blogPost.dataValues };
 };
 
-module.exports = { create, read, readOne };
+const update = async (id, body) => {
+  await BlogPost.update({ ...body, updated: new Date() }, { where: { id } });
+  const { content: { title, content, userId, categories } } = await readOne(id);
+  return { status: status.ok, content: { title, content, userId, categories } };
+};
+
+module.exports = { create, read, readOne, update };
