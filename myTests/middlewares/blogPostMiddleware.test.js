@@ -10,7 +10,7 @@ const { messages } = require('../../utils/errors');
 
 require('chai').use(require('sinon-chai'));
 
-describe.only('blogPostMiddlewares', () => {
+describe('blogPostMiddlewares', () => {
   describe('#validateParams', () => {
     const { title, content } = blogPostMocks.params;
     describe('when the request body does not have a "title"', () => {

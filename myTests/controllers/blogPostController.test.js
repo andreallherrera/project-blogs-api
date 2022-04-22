@@ -34,4 +34,28 @@ describe('BlogPost controller', () => {
       expect(res.json).not.to.deep.eq(blogPostMock.inserted);
     });
   });
+
+  describe('#read', () => {
+    const req = { headers: { authorization: blogPostMock.token } };
+    const res = {};
+
+    before(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+      sinon.stub(blogPostService, 'read')
+        .resolves({ status: 200, content: blogPostMock.list });
+    });
+
+    after(() => blogPostService.read.restore());
+
+    it('It must call "res.status" with value 200', async () => {
+      await BlogPost.read(req, res);
+      expect(res.status.calledWith(200)).to.be.true;
+    });
+
+    it('It must call "res.json" with the inserted blogPost', async () => {
+      await BlogPost.read(req, res);
+      expect(res.json).not.to.deep.eq(blogPostMock.list);
+    });
+  });
 });
