@@ -11,7 +11,12 @@ const create = async (name) => {
 
 const read = async () => {
   const categories = await Category.findAll({ raw: true });
-  return { status: 200, content: categories };
+  return { status: status.ok, content: categories };
 };
 
-module.exports = { create, read };
+const readOne = async (id) => {
+  const category = await Category.findByPk(id, { raw: true });
+  return { status: status.ok, content: category };
+};
+
+module.exports = { create, read, readOne };

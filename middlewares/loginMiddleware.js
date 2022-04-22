@@ -6,10 +6,10 @@ const { status, messages } = require('../utils/errors');
 const verifyLogin = async (email, password) => {
   const errorResponse = { status: status.badRequest, 
     content: { message: messages.INVALID_FIELDS } };
-  const user = await userService.readByEmail(email);
-  if (user.content === null) return errorResponse;
-  if (user.content.password !== password) return errorResponse;
-  const token = jwt.generateToken({ email, password });
+  const { content } = await userService.readByEmail(email);
+  if (content === null) return errorResponse;
+  if (content.password !== password) return errorResponse;
+  const token = jwt.generateToken(content.dataValues);
   return { status: status.ok, content: { token } };
 };
 
