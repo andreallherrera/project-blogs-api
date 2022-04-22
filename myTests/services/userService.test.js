@@ -95,7 +95,6 @@ describe('User service', () => {
       sinon.stub(userModel.findOne).resolves(null);
 
       it('It must return status 404', async () => {
-        console.log('hola');
         const user = await User.readById(0);
         expect(user.status).to.eq(404);
       });
