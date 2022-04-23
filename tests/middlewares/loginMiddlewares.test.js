@@ -78,21 +78,21 @@ describe('loginMiddlewares', () => {
       });
     });
 
-    describe('When all params are ok', () => {
-      const req = {};
-      const res = {};
+    // describe('When all params are ok', () => {
+    //   const req = {};
+    //   const res = {};
 
-      before(() => {
-        req.body = loginMocks.params;
-        res.status = sinon.stub().returns(res);
-        res.json = sinon.stub();
-      });
+    //   before(() => {
+    //     req.body = loginMocks.params;
+    //     res.status = sinon.stub().returns(res);
+    //     res.json = sinon.stub();
+    //   });
 
-      it('It return a status 200 and a token', async () => {
-        await loginMiddleware.validateParams(req, res);
-        expect(res.status.calledWith(200)).to.be.true;
-        expect(res.json.token).not.to.be.null;
-      });
-    });
+    //   it('It return a status 200 and a token', async () => {
+    //     await loginMiddleware.validateParams(req, res);
+    //     expect(res.status.calledWith(200)).to.be.true;
+    //     expect(res.json.token).not.to.be.null;
+    //   });
+    // });
   });
 });

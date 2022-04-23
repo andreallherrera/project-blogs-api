@@ -8,7 +8,7 @@ const BlogPost = require('../../controllers/blogPostController');
 const blogPostService = require('../../services/blogPostService');
 const blogPostMock = require('../mocks/blogPostMocks');
 
-describe.only('BlogPost controller', () => {
+describe('BlogPost controller', () => {
   describe('#create', () => {
     const req = { 
       body: blogPostMock.params,
