@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const { status, messages } = require('../utils/errors');
 
@@ -36,4 +37,14 @@ const deletePost = async (id) => {
   return { status: status.noContent, content: null };
 };
 
-module.exports = { create, read, readOne, update, deletePost };
+const readByTitleOrContent = async (text) => {
+  if (!text) return read();
+  const blogPosts = await BlogPost.findAll({ where: {
+    [Op.or]: [{ title: { [Op.like]: `%${text}%` } }, { content: { [Op.like]: `%${text}%` } }],
+  }, 
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } }] });
+  return { status: status.ok, content: blogPosts };
+};
+
+module.exports = { create, read, readOne, update, deletePost, readByTitleOrContent };
