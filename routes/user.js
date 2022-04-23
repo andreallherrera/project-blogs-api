@@ -8,5 +8,6 @@ const app = express();
 app.post('/', userMiddleware.validateParams, userController.create);
 app.get('/', tokenMiddleware.verifyToken, userController.read);
 app.get('/:id', tokenMiddleware.verifyToken, userController.readOne);
+app.delete('/me', tokenMiddleware.verifyToken, userController.deleteMe);
 
 module.exports = app;
