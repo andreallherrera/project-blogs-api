@@ -21,12 +21,16 @@ const validateParams = async (req, res, next) => {
   next();
 };
 
-const verifyUser = async (token, postId) => {
-  const { id } = jwt.validateJWT(token);
-  const { content } = await blogPostService.readOne(postId);
-  if (id !== content.userId) {
-    return { status: status.unauthorized, content: { message: messages.UNAUTHORIZED_USER } };
+const verifyUser = async (req, res, next) => {
+  const { id } = jwt.validateJWT(req.headers.authorization);
+  const blogPost = await blogPostService.readOne(req.params.id);
+  if (blogPost.status === 404) {
+    return res.status(blogPost.status).json(blogPost.content);
   }
+  if (id !== blogPost.content.userId) {
+    return res.status(status.unauthorized).json({ message: messages.UNAUTHORIZED_USER });
+  }
+  next();
 };
 
 const validateUpdateParams = async (req, res, next) => {
@@ -34,9 +38,7 @@ const validateUpdateParams = async (req, res, next) => {
   if (categoryIds) return res.status(status.badRequest).json({ message: messages.EDIT_CATEGORIES });
   const { error } = updateSchema.validate({ title, content });
   if (error) return res.status(status.badRequest).json({ message: error.message });
-  const verifiedUser = await verifyUser(req.headers.authorization, req.params.id);
-  if (verifiedUser) return res.status(verifiedUser.status).json(verifiedUser.content);
   next();
 };
 
-module.exports = { validateParams, validateUpdateParams };
+module.exports = { validateParams, verifyUser, validateUpdateParams };
