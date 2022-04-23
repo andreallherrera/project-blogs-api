@@ -32,4 +32,10 @@ const deletePost = async (req, res) => {
   res.status(response.status).json(response.content);
 };
 
-module.exports = { create, read, readOne, update, deletePost };
+const readByTitleOrContent = async (req, res) => {
+  const { q } = req.query;
+  const response = await blogPostService.readByTitleOrContent(q);
+  res.status(response.status).json(response.content);
+};
+
+module.exports = { create, read, readOne, update, deletePost, readByTitleOrContent };

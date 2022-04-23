@@ -8,6 +8,7 @@ app.use(tokenMiddleware.verifyToken);
 
 app.post('/', blogPostMiddleware.validateParams, blogPostController.create);
 app.get('/', blogPostController.read);
+app.get('/search', blogPostController.readByTitleOrContent);
 app.get('/:id', blogPostController.readOne);
 app.put('/:id', blogPostMiddleware.verifyUser, blogPostMiddleware.validateUpdateParams, 
   blogPostController.update);
