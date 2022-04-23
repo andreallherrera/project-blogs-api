@@ -26,4 +26,9 @@ const readById = async (id) => {
   return { status: status.ok, content: user };
 };
 
-module.exports = { create, readByEmail, read, readById };
+const deleteMe = async (token) => {
+  const { id } = jwt.validateJWT(token);
+  await User.destroy({ where: { id } });
+  return { status: status.noContent, content: null };
+};
+module.exports = { create, readByEmail, read, readById, deleteMe };
