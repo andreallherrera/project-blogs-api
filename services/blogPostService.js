@@ -31,4 +31,9 @@ const update = async (id, body) => {
   return { status: status.ok, content: { title, content, userId, categories } };
 };
 
-module.exports = { create, read, readOne, update };
+const deletePost = async (id) => {
+  await BlogPost.destroy({ where: { id } });
+  return { status: status.noContent, content: null };
+};
+
+module.exports = { create, read, readOne, update, deletePost };
