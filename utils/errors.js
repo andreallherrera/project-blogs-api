@@ -14,6 +14,8 @@ const messages = {
   USER_NOT_EXISTS: 'User does not exist',
   CATEGORY_NOT_FOUND: '"categoryIds" not found',
   POST_NOT_FOUND: 'Post does not exist',
+  EDIT_CATEGORIES: 'Categories cannot be edited',
+  UNAUTHORIZED_USER: 'Unauthorized user',
   REQUIRED: (name) => `"${name}" is required`,
 };
 

@@ -9,5 +9,7 @@ app.post('/', tokenMiddleware.verifyToken,
   blogPostMiddleware.validateParams, blogPostController.create);
 app.get('/', tokenMiddleware.verifyToken, blogPostController.read);
 app.get('/:id', tokenMiddleware.verifyToken, blogPostController.readOne);
+app.put('/:id', tokenMiddleware.verifyToken, 
+  blogPostMiddleware.validateUpdateParams, blogPostController.update);
 
 module.exports = app;

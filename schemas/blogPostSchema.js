@@ -12,4 +12,13 @@ const schema = Joi.object({
   }),
 });
 
-module.exports = schema;
+const updateSchema = Joi.object({
+  title: Joi.string().required().messages({
+    'string.empty': '"title" is required',
+  }),
+  content: Joi.string().required().messages({
+    'string.empty': '"content" is required',
+  }),
+});
+
+module.exports = { schema, updateSchema };
