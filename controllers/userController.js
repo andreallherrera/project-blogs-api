@@ -17,4 +17,10 @@ const readOne = async (req, res) => {
   res.status(response.status).json(response.content);
 };
 
-module.exports = { create, read, readOne };
+const deleteMe = async (req, res) => {
+  const token = req.headers.authorization;
+  const response = await userService.deleteMe(token);
+  res.status(response.status).json(response.content);
+};
+
+module.exports = { create, read, readOne, deleteMe };
