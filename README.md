@@ -2,7 +2,7 @@
 
 ## Description
 This project was about creating an REST API with CRUD using Sequelize and MSC architecture. The project uses a relational database MySQL and it has unit tests in Mocha, Chai and Sinon.
-<img src="blogs.png" alt="database structure">
+<img align="center" src="public/blogs.png" alt="database structure">
 
 ## Tools
 * NodeJs w/ ExpressJs
@@ -19,7 +19,7 @@ Clone this project and install all the dependencies
 ```
 Create a .env file like this:
 ``` javascript
- MYSQL_USER=root
+  MYSQL_USER=root
   MYSQL_PASSWORD=aPassword
   HOSTNAME=localhost
   PORT=3000
@@ -27,14 +27,14 @@ Create a .env file like this:
 ```
 Running the following command you will create the database tables and seed them:
 ```sh
-npm run prestart
+  npm run prestart
 ```
 ```sh
-npm run seed
+  npm run seed
 ```
 For debugging run: 
 ```sh
-npm run debug
+  npm run debug
 ```
 
 Now you can use <a href="https://www.postman.com/">Postman</a>, <a href="https://www.thunderclient.com/">Thunder Client</a> or <a href="https://insomnia.rest/">Insomnia</a> for making the requests to the endpoints.
